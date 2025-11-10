@@ -20,22 +20,20 @@
   <script type="text/babel">
     const { useState, useEffect, useMemo } = React;
 
-    /* ——————————————————————————————————————
-       Kielitekstit + esittely
-    ——————————————————————————————————————— */
+    /* ————————————————————————————————
+       Kielitekstit
+    ———————————————————————————————— */
     const LANGS = {
       fi: {
         title: "Seniorisurf – Minun digilaitteeni",
         subtitle: "Opintopiiri 2025 · Työryhmä 1",
         introTitle: "Tervetuloa Seniorisurf-kyselyyn!",
-        introBody: `Tämän kyselyn avulla autamme sinua pohtimaan, millainen digilaite sopii juuri sinun tarpeisiisi, arkeesi ja kokemustasoosi. 
-        Oikean laitteen valinta ei ole vain tekninen asia – se on askel kohti sujuvampaa, helpompaa ja yhteisöllisempää arkea. 
-        Kyselyssä kartoitetaan:
-        • miksi olet hankkimassa laitetta,
-        • miten ja missä käytät digilaitteita,
-        • millaisia ominaisuuksia arvostat,
-        • ja mistä voisit saada tukea ja neuvontaa hankinnan jälkeen.
-        Lopuksi saat yhteenvedon ja henkilökohtaisen suosituksen sekä linkkejä oman paikkakuntasi ja verkon digiopastukseen.`,
+        introBody: `Kyselyssä kartoitetaan:
+• miksi olet hankkimassa laitetta,
+• miten ja missä käytät digilaitteita,
+• millaisia ominaisuuksia arvostat,
+• ja mistä voisit saada tukea ja neuvontaa hankinnan jälkeen.
+Lopuksi saat yhteenvedon ja henkilökohtaisen suosituksen sekä linkkejä oman paikkakuntasi ja verkon digiopastukseen.`,
         theme: "Tumma / Vaalea tila",
         bigText: "A–A isompi teksti",
         print: "Tulosta / PDF",
@@ -43,21 +41,21 @@
         copy: "Kopioi yhteenveto",
         export: "Vie CSV",
         boxes: [
-          "🧩 Laatikko 1 – Alkukartoitus",
-          "💡 Laatikko 2 – Nykyiset laitteet & kokemus",
-          "🎨 Laatikko 3 – Mieltymykset",
+          "🧩 Laatikko 1 – Miksi olet hankkimassa laitetta?",
+          "💡 Laatikko 2 – Nykyiset laitteet ja oma osaaminen",
+          "🎨 Laatikko 3 – Mieltymykset (liikkuvuus ja näyttö)",
           "💶 Laatikko 4 – Budjetti ja erityistarpeet"
         ],
         tips: {
           why: "💡 Kirjaa, mitä ongelmia haluat ratkaista – tärkeintäkö on nopeus, helppous, koko vai yhteydenpito?",
           level: "💡 Helppokäyttöisyys on tärkein aloittelijalle; tehokkuus aktiivikäyttäjälle.",
           prefs: "💡 Kotikäyttöön iso ja selkeä näyttö on mukavin. Paljon liikkuvalle kevyt laite on kätevin.",
-          support: "💡 Moni hyötyy lyhyistä digitukihetkistä kirjastossa – kokeile rohkeasti!"
+          support: "💡 Mieti, paljonko haluat käyttää rahaa ja millaisia ominaisuuksia oikeasti tarvitset.",
+          summary: "💡 Hakupainikkeista löydät ajantasaisia laitteita ja hintoja eri kaupoista."
         },
-        summary: "🟩 Yhteenveto ja suositus",
+        summary: "🟩 Yhteenveto ja hakulinkit",
         adviceTitle: "💡 Suositeltu laitetyyppi",
-        adviceNote: "Emme näytä valmiita malleja. Alla on hakupainikkeet, joista löydät ajantasaiset vaihtoehdot ja hinnat.",
-        searchTitle: "🔍 Hae laitteita eri verkkokaupoista (avautuvat uuteen välilehteen)",
+        searchTitle: "🔍 Hae verkosta (avautuu uuteen välilehteen)",
         searchButtons: {
           gigantti: "Hae Gigantista",
           verkkis: "Hae Verkkokauppa.comista",
@@ -66,24 +64,22 @@
           elisa: "Hae Elisalta",
           hintaopas: "Hae Hintaoppaasta"
         },
-        footer: "© Seniorisurf opintopiiri 2025 · Selkokielinen sivu · Ei kerää henkilötietoja"
+        footer: "© Seniorisurf opintopiiri 2025 · Ei kerää henkilötietoja · Vastaukset tallennetaan selaimeen"
       },
       sv: {
         title: "Seniorisurf – Min digitala enhet",
         subtitle: "Studiecirkel 2025",
         introTitle: "Välkommen till SeniorSurf-enkäten!",
-        introBody:
-          "Med denna enkät hjälper vi dig fundera på vilken digital enhet som passar just dig. I slutet får du en sammanfattning och länkar till handledning och digitalt stöd.",
+        introBody: "Enkäten hjälper dig att fundera på vilken digital enhet som passar dig bäst. I slutet får du en sammanfattning och länkar till handledning.",
         theme: "Mörkt / Ljust läge",
         bigText: "A–A större text",
         print: "Skriv ut / PDF",
         lang: "Språk",
         copy: "Kopiera sammanfattning",
         export: "Exportera CSV",
-        summary: "🟩 Sammanfattning och rekommendation",
+        summary: "🟩 Sammanfattning och länkar",
         adviceTitle: "💡 Rekommenderad enhetstyp",
-        adviceNote: "Vi visar inga färdiga modeller. Använd knapparna för att söka aktuella alternativ och priser.",
-        searchTitle: "🔍 Sök i webbutiker (ny flik)",
+        searchTitle: "🔍 Sök på nätet (ny flik)",
         searchButtons: {
           gigantti: "Sök på Gigantti",
           verkkis: "Sök på Verkkokauppa.com",
@@ -92,25 +88,22 @@
           elisa: "Sök på Elisa",
           hintaopas: "Sök på Hintaopas"
         },
-        footer: "© Seniorisurf 2025 · Ingen persondata samlas"
+        footer: "© Seniorisurf 2025 · Inga personuppgifter samlas"
       },
       en: {
         title: "Senior Surf – My digital device",
         subtitle: "Study Circle 2025",
         introTitle: "Welcome to the SeniorSurf survey!",
-        introBody:
-          "This survey helps you find what kind of digital device suits your needs. At the end you get a summary and useful links to online and local support.",
+        introBody: "We’ll help you choose the right digital device for your needs. At the end you get a summary and links to online and local digital support.",
         theme: "Dark / Light mode",
         bigText: "A–A larger text",
         print: "Print / PDF",
         lang: "Language",
         copy: "Copy summary",
         export: "Export CSV",
-        summary: "🟩 Summary and recommendation",
+        summary: "🟩 Summary and links",
         adviceTitle: "💡 Recommended device type",
-        adviceNote:
-          "We don’t show specific models. Use the search buttons below to explore up-to-date prices and options.",
-        searchTitle: "🔍 Search shops (new tab)",
+        searchTitle: "🔍 Search online (new tab)",
         searchButtons: {
           gigantti: "Search Gigantti",
           verkkis: "Search Verkkokauppa.com",
@@ -123,9 +116,9 @@
       }
     };
 
-    /* ——————————————————————————————————————
-       Hakuosoitteet
-    ——————————————————————————————————————— */
+    /* ————————————————————————————————
+       Hakulinkit eri kauppoihin
+    ———————————————————————————————— */
     function buildSearchUrls(device) {
       const q = encodeURIComponent(device);
       return {
@@ -138,63 +131,64 @@
       };
     }
 
-    /* ——————————————————————————————————————
-       Lomake
-    ——————————————————————————————————————— */
-    const load = (k, d) => {
-      try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; }
-    };
-    const save = (k, v) => {
-      try { localStorage.setItem(k, JSON.stringify(v)); } catch {}
-    };
-
-    function Section({ title, children }) {
+    /* ————————————————————————————————
+       Lomake ja logiikka
+    ———————————————————————————————— */
+    function Section({ title, children, tip }) {
       return (
         <details open className="mb-3 border border-slate-200 dark:border-slate-700 rounded-2xl">
           <summary className="cursor-pointer p-4 font-semibold bg-white dark:bg-slate-800">
             {title}
           </summary>
-          <div className="p-4 bg-slate-50 dark:bg-slate-900">{children}</div>
+          <div className="p-4 bg-slate-50 dark:bg-slate-900 space-y-2">
+            {children}
+            {tip && (
+              <p className="text-sm text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-700 rounded-lg p-2">
+                {tip}
+              </p>
+            )}
+          </div>
         </details>
       );
     }
 
-    function Checkbox({ label, checked, onChange }) {
-      return (
-        <label className="flex items-start gap-2 p-1">
-          <input type="checkbox" checked={checked} onChange={e => onChange(e.target.checked)} />
-          {label}
-        </label>
-      );
-    }
-
     function App() {
-      const [lang, setLang] = useState(load("lang", "fi"));
+      const [lang, setLang] = React.useState("fi");
       const t = LANGS[lang];
-      const [dark, setDark] = useState(load("dark", false));
-      const [large, setLarge] = useState(load("large", false));
+      const [dark, setDark] = useState(false);
+      const [large, setLarge] = useState(false);
 
-      useEffect(() => { document.body.classList.toggle("dark", dark); save("dark", dark); }, [dark]);
-      useEffect(() => { document.documentElement.style.fontSize = large ? "18px" : "16px"; save("large", large); }, [large]);
-      useEffect(() => save("lang", lang), [lang]);
+      const [form, setForm] = useState({
+        why: [],
+        devices: [],
+        use: [],
+        mobility: "",
+        screen: "",
+        level: "",
+        budget: ""
+      });
 
-      const [answers, setA] = useState({ why: [], use: [], level: "", mobility: "", screen: "", budget: "" });
-      const toggle = (k, v) => setA(p => ({ ...p, [k]: p[k].includes(v) ? p[k].filter(x => x !== v) : [...p[k], v] }));
+      const toggleMulti = (key, value) =>
+        setForm((f) => {
+          const set = new Set(f[key]);
+          set.has(value) ? set.delete(value) : set.add(value);
+          return { ...f, [key]: [...set] };
+        });
 
       // Päättele laitetyyppi
-      const result = useMemo(() => {
-        let type = "tabletti";
-        if (answers.mobility === "Kotona" && answers.screen === "Iso") type = "pöytäkone";
-        else if (answers.level.includes("aloittelija")) type = "tabletti";
-        else if (answers.use.includes("työskentely") || answers.use.includes("opiskelu")) type = "kannettava";
-        else if (answers.mobility === "Liikkuva") type = "älypuhelin";
-        return type;
-      }, [answers]);
+      const type = useMemo(() => {
+        if (form.mobility === "Kotona" && form.screen === "Iso") return "pöytäkone";
+        if (form.level.includes("Aloittelija")) return "tabletti";
+        if (form.use.includes("Työskentely") || form.use.includes("Opiskelu")) return "kannettava";
+        if (form.mobility === "Liikkuva") return "älypuhelin";
+        return "tabletti";
+      }, [form]);
 
-      const urls = useMemo(() => buildSearchUrls(result), [result]);
+      const urls = useMemo(() => buildSearchUrls(type), [type]);
 
       return (
         <div>
+          {/* Ylätunniste ja kielivalinta */}
           <header className="mb-6">
             <div className="flex flex-col sm:flex-row justify-between items-center gap-3">
               <div>
@@ -202,45 +196,49 @@
                 <p>{t.subtitle}</p>
               </div>
               <div className="flex gap-2 items-center flex-wrap">
-                <button onClick={() => setDark(v => !v)} className="border px-3 py-1 rounded">{t.theme}</button>
-                <button onClick={() => setLarge(v => !v)} className="border px-3 py-1 rounded">{t.bigText}</button>
+                <button onClick={() => setDark((v) => !v)} className="border px-3 py-1 rounded">{t.theme}</button>
+                <button onClick={() => setLarge((v) => !v)} className="border px-3 py-1 rounded">{t.bigText}</button>
                 <label>{t.lang}:</label>
-                <select value={lang} onChange={e => setLang(e.target.value)} className="border rounded px-2 py-1">
+                <select value={lang} onChange={(e) => setLang(e.target.value)} className="border rounded px-2 py-1">
                   <option value="fi">FI</option>
                   <option value="sv">SV</option>
                   <option value="en">EN</option>
                 </select>
               </div>
             </div>
+
+            {/* Alkuteksti */}
             <div className="mt-4 p-4 rounded-2xl border bg-white dark:bg-slate-800">
               <h2 className="font-semibold text-lg">{t.introTitle}</h2>
               <p className="mt-2 text-slate-700 dark:text-slate-300 whitespace-pre-line">{t.introBody}</p>
             </div>
           </header>
 
-          <Section title={t.boxes[0]}>
-            <p>{t.tips.why}</p>
+          {/* Kysymysosiot */}
+          <Section title={t.boxes[0]} tip={t.tips.why}>
+            <p>Valitse kaikki sopivat syyt.</p>
           </Section>
-          <Section title={t.boxes[1]}>
-            <p>{t.tips.level}</p>
+          <Section title={t.boxes[1]} tip={t.tips.level}>
+            <p>Arvioi oma taitotasosi ja valitse käyttämäsi laitteet.</p>
           </Section>
-          <Section title={t.boxes[2]}>
-            <p>{t.tips.prefs}</p>
+          <Section title={t.boxes[2]} tip={t.tips.prefs}>
+            <p>Valitse liikkuvuus ja näytön koko, jotka sopivat sinulle.</p>
           </Section>
-          <Section title={t.boxes[3]}>
-            <p>{t.tips.support}</p>
+          <Section title={t.boxes[3]} tip={t.tips.support}>
+            <p>Valitse budjetti ja erityistarpeet. Tämä auttaa rajamaan vaihtoehtoja.</p>
           </Section>
 
-          <section className="mt-6 p-4 bg-white dark:bg-slate-800 rounded-2xl border">
+          {/* Tulos ja hakulinkit */}
+          <section className="mt-6 p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700">
             <h2 className="text-xl font-semibold mb-2">{t.summary}</h2>
-            <p><b>{t.adviceTitle}</b>: {result}</p>
-            <p className="text-sm mt-1">{t.adviceNote}</p>
+            <p><b>{t.adviceTitle}:</b> {type}</p>
+            <p className="mt-2 text-sm">{t.tips.summary}</p>
             <h3 className="mt-3 font-semibold">{t.searchTitle}</h3>
             <div className="grid sm:grid-cols-2 gap-2 mt-2">
-              {Object.entries(urls).map(([k, u]) => (
-                <a key={k} href={u} target="_blank" rel="noreferrer"
+              {Object.entries(urls).map(([key, u]) => (
+                <a key={key} href={u} target="_blank" rel="noreferrer"
                    className="border rounded-lg text-center px-3 py-2 bg-slate-50 dark:bg-slate-700 hover:bg-slate-100">
-                  {t.searchButtons[k]}
+                  {t.searchButtons[key]}
                 </a>
               ))}
             </div>
