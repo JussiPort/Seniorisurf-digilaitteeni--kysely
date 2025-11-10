@@ -11,7 +11,10 @@
   <style>
     html { scroll-behavior: smooth; }
     body.dark { background-color: #0f172a; color: #e2e8f0; }
-    details[open] summary .chev { transform: rotate(90deg); }
+    .btn { @apply border px-3 py-1.5 rounded; }
+    .chip { @apply px-3 py-1 rounded-full border text-sm; }
+    .chip-on { @apply bg-emerald-100 border-emerald-300 dark:bg-emerald-900/30 dark:border-emerald-700; }
+    .chip-off { @apply bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-600; }
   </style>
 </head>
 <body class="bg-slate-50 text-slate-900 transition-colors">
@@ -34,29 +37,22 @@
 • millaisia ominaisuuksia arvostat,
 • ja mistä voisit saada tukea ja neuvontaa hankinnan jälkeen.
 Lopuksi saat yhteenvedon ja henkilökohtaisen suosituksen sekä linkkejä oman paikkakuntasi ja verkon digiopastukseen.`,
-        theme: "Tumma / Vaalea tila",
-        bigText: "A–A isompi teksti",
-        print: "Tulosta / PDF",
-        lang: "Kieli",
-        clear: "Tyhjennä lomake",
-        copy: "Kopioi yhteenveto",
-        export: "Vie CSV",
-        boxes: [
-          "🧩 1 – Miksi olet hankkimassa laitetta?",
-          "💡 2 – Nykyiset laitteet ja oma osaaminen",
-          "🎨 3 – Mieltymykset (liikkuvuus ja näyttö)",
-          "💶 4 – Budjetti ja erityistarpeet",
-          "📍 5 – Asuinpaikka ja digituki",
-          "🟩 6 – Yhteenveto ja hakulinkit"
-        ],
-        tips: {
-          why: "💡 Kirjaa, mitä ongelmia haluat ratkaista – tärkeintäkö on nopeus, helppous, koko vai yhteydenpito?",
-          level: "💡 Helppokäyttöisyys on tärkein aloittelijalle; tehokkuus aktiivikäyttäjälle.",
-          prefs: "💡 Iso, selkeä näyttö sopii kotikäyttöön. Liikkuvalle kevyt laite on kätevä.",
-          budget: "💡 Valitse budjetti ja vain tärkeimmät ominaisuudet.",
-          support: "💡 Digiopastusta löytyy kirjastoista ja järjestöistä (SeniorSurf, Enter ry).",
-          summary: "💡 Alla olevista painikkeista etsit ajantasaiset tuotteet ja hinnat eri kaupoista."
+        ui: {
+          theme: "Tumma / Vaalea tila",
+          big: "A–A isompi teksti",
+          print: "Tulosta / PDF",
+          lang: "Kieli",
+          clear: "Tyhjennä lomake",
+          back: "Palaa",
+          next: "Seuraava",
+          start: "Aloita",
+          toSummary: "Siirry yhteenvetoon",
+          copy: "Kopioi yhteenveto",
+          csv: "Vie CSV",
         },
+        steps: ["Johdanto","Miksi","Nykyiset laitteet & osaaminen","Mieltymykset","Budjetti & tarpeet","Asuinpaikka & digituki","Yhteenveto"],
+        // 1 – Miksi
+        whyTitle: "1/5 – Miksi olet hankkimassa uutta laitetta?",
         whyOpts: [
           "Nykyinen laite on vanha tai hidas",
           "Tarvitsen laitteen työskentelyyn tai opiskeluun",
@@ -66,24 +62,50 @@ Lopuksi saat yhteenvedon ja henkilökohtaisen suosituksen sekä linkkejä oman p
           "Haluaisin aloittaa uuden harrastuksen",
           "Muu syy"
         ],
+        whyFree: "Kuvaile omin sanoin (valinnainen)",
+        whyTip: "💡 Mieti, mitä haluat parantaa tai helpottaa.",
+        // 2 – Nykyiset & osaaminen & käyttö
+        haveTitle: "2/5 – Nykyiset laitteet ja oma osaaminen",
         haveOpts: ["Ei vielä lainkaan","Älypuhelin","Tabletti","Kannettava tietokone","Pöytäkone","Älykello tai muu mobiililaite"],
+        levelTitle: "Miten arvioit omaa osaamistasi?",
         levelOpts: ["Aloittelija","Peruskäyttäjä","Kokenut"],
         useTitle: "Mihin asioihin käytät tai haluaisit käyttää digilaitetta? (Valitse useita)",
-        useOpts: ["Omien asioiden hoitaminen (pankki, Kela, verottaja, liput)","Tiedon hakeminen (ohjeet, harrastukset, uutiset)","Viihde (elokuvat, kirjat, musiikki)","Pelaaminen","Luova työ (kirjoittaminen, kuvankäsittely, piirtäminen)","Verkkokurssit ja etäluennot","Yhteydenpito (WhatsApp, Skype, Facebook jne.)"],
+        useOpts: [
+          "Omien asioiden hoitaminen (pankki, Kela, verottaja, liput)",
+          "Tiedon hakeminen (ohjeet, harrastukset, uutiset)",
+          "Viihde (elokuvat, kirjat, musiikki)",
+          "Pelaaminen",
+          "Luova työ (kirjoittaminen, kuvankäsittely, piirtäminen)",
+          "Verkkokurssit ja etäluennot",
+          "Yhteydenpito (WhatsApp, Skype, Facebook jne.)"
+        ],
+        haveTip: "💡 Helppokäyttöisyys on tärkein aloittelijalle; tehokkuus aktiivikäyttäjälle.",
+        // 3 – Mieltymykset
+        prefTitle: "3/5 – Mieltymykset (liikkuvuus ja näyttö)",
+        mobilityTitle: "Kuinka paljon liikut laitteen kanssa?",
         mobilityOpts: ["Käytän laitetta pääasiassa kotona","Otan laitteen joskus mukaan","Tarvitsen kevyen ja helposti mukana kulkevan laitteen"],
+        screenTitle: "Kumpi on sinulle tärkeämpää?",
         screenOpts: ["Iso ja selkeä näyttö (helppo nähdä ja käyttää)","Kevyt ja kompakti koko (helppo kuljettaa)"],
+        prefTip: "💡 Iso näyttö sopii kotikäyttöön; kevyt laite liikkuvalle.",
+        // 4 – Budjetti & tarpeet
+        budTitle: "4/5 – Budjetti ja erityistarpeet",
+        budgetTitle: "Paljonko olet valmis sijoittamaan uuteen laitteeseen?",
         budgetOpts: ["Alle 500 €","500–1000 €","Yli 1000 €"],
+        needTitle: "Onko sinulla erityistarpeita tai toiveita? (valitse useita)",
         needOpts: ["Hyvä kamera","Kynätuki","Pitkä akun kesto","Suuri tallennustila","Pelaamiseen sopiva teho","Suuri ja kirkas näyttö","Kevyt ja helposti mukana kulkeva","Fyysinen näppäimistö","Esteettömyysominaisuudet (ääniavustus, suurennus, kontrasti)"],
-        labels: {
-          freeText: "Kuvaile omin sanoin (valinnainen)",
-          place: "Asuinpaikka (kaupunki/kunta)",
-          supportQ: "Hyödynnätkö digitukea tarvittaessa?",
-          yes: "Kyllä", maybe: "Ehkä", no: "En",
-          yourAnswers: "🧾 Yhteenveto vastauksistasi",
-          adviceTitle: "💡 Suositeltu laitetyyppi",
-          altAdvice: "Vaihtoehtoinen tyyppi",
-          searchTitle: "🔍 Hae verkosta (avautuu uuteen välilehteen)"
-        },
+        budTip: "💡 Valitse budjetti ja vain tärkeimmät ominaisuudet.",
+        // 5 – Asuinpaikka & digituki
+        locTitle: "5/5 – Asuinpaikka ja digituki",
+        placeLabel: "Asuinpaikka (kaupunki/kunta)",
+        supportQ: "Hyödynnätkö digitukea tarvittaessa?",
+        yes: "Kyllä", maybe:"Ehkä", no:"En",
+        locTip: "💡 Digiopastusta löytyy kirjastoista ja järjestöistä (SeniorSurf, Enter ry).",
+        // 6 – Yhteenveto
+        summaryTitle: "Yhteenveto",
+        yourAnswers: "🧾 Yhteenveto vastauksistasi",
+        adviceTitle: "💡 Suositeltu laitetyyppi",
+        altAdvice: "Vaihtoehtoinen tyyppi",
+        searchTitle: "🔍 Hae verkosta (avautuu uuteen välilehteen)",
         shops: {
           gigantti: "Hae Gigantista",
           verkkis: "Hae Verkkokauppa.comista",
@@ -95,82 +117,101 @@ Lopuksi saat yhteenvedon ja henkilökohtaisen suosituksen sekä linkkejä oman p
         footer: "© Seniorisurf opintopiiri 2025 · Ei kerää henkilötietoja · Vastaukset tallennetaan selaimeen"
       },
       sv: {
-        title: "Seniorisurf – Min digitala enhet",
-        subtitle: "Studiecirkel 2025",
-        introTitle: "Välkommen till SeniorSurf-enkäten!",
-        introBody: "Enkäten kartlägger behov, användning, preferenser och stöd. I slutet får du en sammanfattning och söklänkar.",
-        theme: "Mörkt / Ljust läge",
-        bigText: "A–A större text",
-        print: "Skriv ut / PDF",
-        lang: "Språk",
-        clear: "Töm formuläret",
-        copy: "Kopiera sammanfattning",
-        export: "Exportera CSV",
-        boxes: ["🧩 1 – Varför skaffar du en enhet?","💡 2 – Nuvarande enheter & kunskap","🎨 3 – Preferenser (rörlighet & skärm)","💶 4 – Budget & behov","📍 5 – Ort & stöd","🟩 6 – Sammanfattning & länkar"],
-        tips: { why:"💡 Skriv vad du vill förbättra.", level:"💡 Enkelhet hjälper nybörjare mest.", prefs:"💡 Stor skärm passar hemmabruk.", budget:"💡 Välj budget och det viktigaste.", support:"💡 Bibliotek erbjuder digital handledning.", summary:"💡 Använd knapparna för att söka i butikerna." },
+        title:"Seniorisurf – Min digitala enhet",
+        subtitle:"Studiecirkel 2025",
+        introTitle:"Välkommen till SeniorSurf-enkäten!",
+        introBody:"Vi kartlägger behov, användning, preferenser och stöd. I slutet får du en sammanfattning och söklänkar.",
+        ui:{theme:"Mörkt / Ljust läge",big:"A–A större text",print:"Skriv ut / PDF",lang:"Språk",clear:"Töm formuläret",back:"Tillbaka",next:"Nästa",start:"Starta",toSummary:"Gå till sammanfattning",copy:"Kopiera",csv:"Exportera CSV"},
+        steps:["Intro","Varför","Enheter & kunskap","Preferenser","Budget & behov","Ort & stöd","Sammanfattning"],
+        whyTitle:"1/5 – Varför skaffar du en enhet?",
+        whyOpts:["Nuvarande enhet är gammal/långsam","Arbete eller studier","Underlätta e-tjänster","Hålla kontakt","Lära mig nytt","Ny hobby","Annan orsak"],
+        whyFree:"Beskriv med egna ord",
+        whyTip:"💡 Vad vill du förbättra?",
+        haveTitle:"2/5 – Nuvarande enheter och kunskap",
         haveOpts:["Inga ännu","Smarttelefon","Surfplatta","Bärbar dator","Stationär dator","Smartklocka"],
+        levelTitle:"Hur bedömer du din nivå?",
         levelOpts:["Nybörjare","Grundläggande","Erfaren"],
-        useTitle: "Vad vill du använda enheten till? (Flera val möjliga)",
+        useTitle:"Vad vill du använda enheten till? (flera val)",
         useOpts:["E-tjänster","Informationssökning","Underhållning","Spel","Kreativt arbete","Nätkurser","Kontakt"],
+        haveTip:"💡 Enkelhet hjälper nybörjare mest.",
+        prefTitle:"3/5 – Preferenser (rörlighet & skärm)",
+        mobilityTitle:"Hur mycket rör du dig med enheten?",
         mobilityOpts:["Mest hemma","Ibland med","Behöver lätt att bära"],
-        screenOpts:["Stor och tydlig skärm","Liten och lätt"],
+        screenTitle:"Vad är viktigare?",
+        screenOpts:["Stor och tydlig skärm","Kompakt och lätt"],
+        prefTip:"💡 Stor skärm passar hemmabruk.",
+        budTitle:"4/5 – Budget & behov",
+        budgetTitle:"Din budget?",
         budgetOpts:["Under 500 €","500–1000 €","Över 1000 €"],
+        needTitle:"Särskilda behov",
         needOpts:["Bra kamera","Pennstöd","Lång batteritid","Stor lagring","Spelkraft","Stor och ljus skärm","Lätt att bära","Fysiskt tangentbord","Tillgänglighetsfunktioner"],
-        labels:{ freeText:"Beskriv med egna ord", place:"Ort (stad/kommun)", supportQ:"Vill du använda digitalt stöd?", yes:"Ja", maybe:"Kanske", no:"Nej", yourAnswers:"🧾 Sammanfattning", adviceTitle:"💡 Rekommenderad typ", altAdvice:"Alternativ typ", searchTitle:"🔍 Öppna söklänkar (ny flik)"},
-        shops:{ gigantti:"Sök på Gigantti", verkkis:"Sök på Verkkokauppa.com", power:"Sök på Power", dna:"Sök på DNA", elisa:"Sök på Elisa", hintaopas:"Sök på Hintaopas"},
+        budTip:"💡 Välj budget och det viktigaste.",
+        locTitle:"5/5 – Ort & stöd",
+        placeLabel:"Ort (stad/kommun)",
+        supportQ:"Vill du använda digitalt stöd?",
+        yes:"Ja", maybe:"Kanske", no:"Nej",
+        locTip:"💡 Bibliotek erbjuder ofta digital handledning.",
+        summaryTitle:"Sammanfattning",
+        yourAnswers:"🧾 Ditt sammandrag",
+        adviceTitle:"💡 Rekommenderad typ",
+        altAdvice:"Alternativ typ",
+        searchTitle:"🔍 Öppna söklänkar",
+        shops:{gigantti:"Sök på Gigantti",verkkis:"Sök på Verkkokauppa.com",power:"Sök på Power",dna:"Sök på DNA",elisa:"Sök på Elisa",hintaopas:"Sök på Hintaopas"},
         footer:"© Seniorisurf 2025"
       },
       en: {
-        title: "Senior Surf – My digital device",
-        subtitle: "Study Circle 2025",
-        introTitle: "Welcome to the SeniorSurf survey!",
-        introBody: "We map your needs, usage, preferences and support options. You’ll get a summary and search links.",
-        theme: "Dark / Light mode",
-        bigText: "A–A larger text",
-        print: "Print / PDF",
-        lang: "Language",
-        clear: "Reset form",
-        copy: "Copy summary",
-        export: "Export CSV",
-        boxes: ["🧩 1 – Why a new device?","💡 2 – Current devices & skills","🎨 3 – Preferences (mobility & screen)","💶 4 – Budget & needs","📍 5 – Location & support","🟩 6 – Summary & links"],
-        tips: { why:"💡 Note what you want to improve.", level:"💡 Simplicity helps beginners most.", prefs:"💡 Big clear screen suits home use.", budget:"💡 Pick a budget and key features.", support:"💡 Libraries offer free digital help.", summary:"💡 Use the buttons to search shops." },
+        title:"Senior Surf – My digital device",
+        subtitle:"Study Circle 2025",
+        introTitle:"Welcome to the SeniorSurf survey!",
+        introBody:"We’ll map your needs, usage, preferences and support options. At the end you get a summary and search links.",
+        ui:{theme:"Dark / Light",big:"A–A larger text",print:"Print / PDF",lang:"Language",clear:"Reset form",back:"Back",next:"Next",start:"Start",toSummary:"Go to summary",copy:"Copy",csv:"Export CSV"},
+        steps:["Intro","Why","Devices & skills","Preferences","Budget & needs","Location & support","Summary"],
+        whyTitle:"1/5 – Why do you need a new device?",
+        whyOpts:["Old or slow device","Work or studies","E-services & admin","Keep in touch","Learn new things","New hobby","Other reason"],
+        whyFree:"Describe in your own words",
+        whyTip:"💡 What do you want to improve?",
+        haveTitle:"2/5 – Current devices and skills",
         haveOpts:["None yet","Smartphone","Tablet","Laptop","Desktop","Smartwatch"],
+        levelTitle:"How do you rate your skills?",
         levelOpts:["Beginner","Intermediate","Advanced"],
-        useTitle: "What will you use it for? (Select all that apply)",
+        useTitle:"What will you use it for? (multiple choices)",
         useOpts:["E-services","Information search","Entertainment","Gaming","Creative work","Online courses","Keeping in touch"],
+        haveTip:"💡 Simplicity helps beginners most.",
+        prefTitle:"3/5 – Preferences (mobility & screen)",
+        mobilityTitle:"How much do you move with the device?",
         mobilityOpts:["Mainly at home","Sometimes with me","Need lightweight portable"],
+        screenTitle:"What matters more?",
         screenOpts:["Large & clear screen","Compact & light"],
+        prefTip:"💡 Big clear screen suits home use.",
+        budTitle:"4/5 – Budget & special needs",
+        budgetTitle:"Your budget?",
         budgetOpts:["Under €500","€500–€1000","Over €1000"],
+        needTitle:"Special needs",
         needOpts:["Good camera","Pen support","Long battery life","Large storage","Gaming capable","Large bright display","Lightweight portable","Physical keyboard","Accessibility features"],
-        labels:{ freeText:"Describe in your own words", place:"City / municipality", supportQ:"Would you use digital support?", yes:"Yes", maybe:"Maybe", no:"No", yourAnswers:"🧾 Your summary", adviceTitle:"💡 Recommended type", altAdvice:"Alternative type", searchTitle:"🔍 Open search links (new tab)"},
-        shops:{ gigantti:"Search Gigantti", verkkis:"Search Verkkokauppa.com", power:"Search Power", dna:"Search DNA", elisa:"Search Elisa", hintaopas:"Search Hintaopas"},
+        budTip:"💡 Choose a budget and only the essentials.",
+        locTitle:"5/5 – Location & digital support",
+        placeLabel:"City / municipality",
+        supportQ:"Would you use digital support if needed?",
+        yes:"Yes", maybe:"Maybe", no:"No",
+        locTip:"💡 Libraries often offer free digital help.",
+        summaryTitle:"Summary",
+        yourAnswers:"🧾 Your answers",
+        adviceTitle:"💡 Recommended type",
+        altAdvice:"Alternative type",
+        searchTitle:"🔍 Search shops (new tab)",
+        shops:{gigantti:"Search Gigantti",verkkis:"Search Verkkokauppa.com",power:"Search Power",dna:"Search DNA",elisa:"Search Elisa",hintaopas:"Search Hintaopas"},
         footer:"© Senior Surf 2025"
       }
     };
 
     /* ——————————————————————————————————
-       Pienet apurit
+       Apurit
     ——————————————————————————————————— */
     const load = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } };
     const save = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
 
     const Chip = ({label, active, onClick}) =>
-      <button onClick={onClick}
-        className={`px-3 py-1 rounded-full border text-sm
-          ${active ? 'bg-emerald-100 border-emerald-300 dark:bg-emerald-900/30 dark:border-emerald-700'
-                   : 'bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-600'}`}>
-        {label}
-      </button>;
-
-    const Section = ({title, tip, children}) => (
-      <details open className="mb-3 border border-slate-300 dark:border-slate-700 rounded-2xl">
-        <summary className="cursor-pointer p-4 font-semibold bg-white dark:bg-slate-800">{title}</summary>
-        <div className="p-4 bg-slate-50 dark:bg-slate-900 space-y-3">
-          {children}
-          {tip && <p className="text-sm text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-700 rounded-lg p-2">{tip}</p>}
-        </div>
-      </details>
-    );
+      <button onClick={onClick} className={`chip ${active ? 'chip-on' : 'chip-off'}`}>{label}</button>;
 
     function buildSearchUrls(query){
       const q = encodeURIComponent(query);
@@ -192,6 +233,7 @@ Lopuksi saat yhteenvedon ja henkilökohtaisen suosituksen sekä linkkejä oman p
       const t = LANGS[lang];
       const [dark,setDark] = useState(load('ss-dark',false));
       const [large,setLarge] = useState(load('ss-large',false));
+      const [step,setStep] = useState(load('ss-step',0)); // 0..6
 
       const [f,setF] = useState(load('ss-form', {
         why:[], whyFree:"",
@@ -206,6 +248,7 @@ Lopuksi saat yhteenvedon ja henkilökohtaisen suosituksen sekä linkkejä oman p
       useEffect(()=> { document.body.classList.toggle('dark', dark); save('ss-dark',dark); },[dark]);
       useEffect(()=> { document.documentElement.style.fontSize = large? '18px':'16px'; save('ss-large',large); },[large]);
       useEffect(()=> save('ss-form',f),[f]);
+      useEffect(()=> save('ss-step',step),[step]);
 
       const toggle = (key, value) => setF(prev=>{
         const set = new Set(prev[key]);
@@ -214,25 +257,27 @@ Lopuksi saat yhteenvedon ja henkilökohtaisen suosituksen sekä linkkejä oman p
       });
 
       const resetAll = () => {
-        localStorage.removeItem('ss-form');
+        localStorage.removeItem('ss-form'); localStorage.removeItem('ss-step');
         setF({why:[], whyFree:"", have:[], level:"", use:[], mobility:"", screen:"", budget:"", needs:[], place:"", support:""});
+        setStep(0);
       };
 
-      // ——— pisteytys: best + alt
+      // ——— suositus: pisteytys
       const scoring = useMemo(()=>{
         const types = ['tabletti','kannettava','pöytäkone','älypuhelin'];
         const s = Object.fromEntries(types.map(k=>[k,0]));
 
         // käytöt
-        f.use.includes(t.useOpts[4]) && (s.kannettava+=3); // Luova työ
-        f.use.includes(t.useOpts[5]) && (s.kannettava+=3); // Verkkokurssit
-        f.use.includes(t.useOpts[0]) && (s.tabletti+=2);   // Asiointi
-        f.use.includes(t.useOpts[1]) && (s.tabletti+=2);   // Tiedonhaku
-        f.use.includes(t.useOpts[6]) && (s.älypuhelin+=3); // Yhteydenpito
-        f.use.includes(t.useOpts[3]) && (s.kannettava+=2); // Pelaaminen
+        const U = t.useOpts;
+        f.use.includes(U[4]) && (s.kannettava+=3); // luova työ
+        f.use.includes(U[5]) && (s.kannettava+=3); // verkkokurssit
+        f.use.includes(U[0]) && (s.tabletti+=2);   // asiointi
+        f.use.includes(U[1]) && (s.tabletti+=2);   // tiedonhaku
+        f.use.includes(U[6]) && (s.älypuhelin+=3); // yhteydenpito
+        f.use.includes(U[3]) && (s.kannettava+=2); // pelaaminen
 
         // liikkuvuus & näyttö
-        if (f.mobility===t.mobilityOpts[0]) s.pöytäkone+=3; // kotona
+        if (f.mobility===t.mobilityOpts[0]) s.pöytäkone+=3;
         if (f.mobility===t.mobilityOpts[2]) s.älypuhelin+=3, s.tabletti+=2, s.kannettava+=1;
         if (f.screen===t.screenOpts[0]) s.pöytäkone+=2, s.tabletti+=2, s.kannettava+=1;
         if (f.screen===t.screenOpts[1]) s.älypuhelin+=2, s.tabletti+=1;
@@ -248,14 +293,14 @@ Lopuksi saat yhteenvedon ja henkilökohtaisen suosituksen sekä linkkejä oman p
         if (f.budget===t.budgetOpts[2]) s.kannettava+=2, s.pöytäkone+=2;
 
         // tarpeet
-        f.needs.includes("Fyysinen näppäimistö") && (s.kannettava+=2, s.pöytäkone+=2);
-        f.needs.includes("Fysiskt tangentbord") && (s.kannettava+=2, s.pöytäkone+=2);
-        f.needs.includes("Physical keyboard") && (s.kannettava+=2, s.pöytäkone+=2);
-
-        f.needs.some(n=>/Esteettömyys|Tillgänglighet|Accessibility/.test(n)) && (s.tabletti+=1, s.älypuhelin+=1);
-        f.needs.some(n=>/Pitkä akku|Lång batteri|Long battery/.test(n)) && (s.tabletti+=1, s.älypuhelin+=1);
-        f.needs.some(n=>/Suuri.*näyttö|Stor.*skärm|Large.*display/.test(n)) && (s.pöytäkone+=2, s.tabletti+=2);
-        f.needs.some(n=>/Kynätuki|Pennstöd|Pen support/.test(n)) && (s.tabletti+=2);
+        const keyb = /Fyysinen näppäimistö|Fysiskt tangentbord|Physical keyboard/;
+        const acc = /Esteettömyys|Tillgänglighet|Accessibility/;
+        const big = /Suuri ja kirkas näyttö|Stor och ljus skärm|Large bright display/;
+        const pen = /Kynätuki|Pennstöd|Pen support/;
+        if (f.needs.some(n=>keyb.test(n))) s.kannettava+=2, s.pöytäkone+=2;
+        if (f.needs.some(n=>acc.test(n))) s.tabletti+=1, s.älypuhelin+=1;
+        if (f.needs.some(n=>big.test(n))) s.pöytäkone+=2, s.tabletti+=2;
+        if (f.needs.some(n=>pen.test(n))) s.tabletti+=2;
 
         const sorted = Object.entries(s).sort((a,b)=>b[1]-a[1]);
         const best = sorted[0][0];
@@ -267,13 +312,23 @@ Lopuksi saat yhteenvedon ja henkilökohtaisen suosituksen sekä linkkejä oman p
         let q = type;
         if (f.budget===t.budgetOpts[0]) q += " alle 500 €";
         if (f.budget===t.budgetOpts[1]) q += " 500–1000 €";
-        if (f.needs.includes("Suuri ja kirkas näyttö") || f.needs.includes("Stor och ljus skärm") || f.needs.includes("Large bright display")) q += " iso näyttö";
-        if (f.needs.includes("Fyysinen näppäimistö") || f.needs.includes("Fysiskt tangentbord") || f.needs.includes("Physical keyboard")) q += " näppäimistö";
+        if (f.needs.some(n=>/Suuri.*näyttö|Stor.*skärm|Large.*display/.test(n))) q += " iso näyttö";
+        if (f.needs.some(n=>/Fyysinen näppäimistö|Fysiskt tangentbord|Physical keyboard/.test(n))) q += " näppäimistö";
         return q;
       };
-
       const urlsBest = useMemo(()=> buildSearchUrls(queryForType(scoring.best)), [scoring.best, f.budget, f.needs]);
       const urlsAlt  = useMemo(()=> scoring.alt ? buildSearchUrls(queryForType(scoring.alt)) : null, [scoring.alt, f.budget, f.needs]);
+
+      // ——— navigaatio
+      const canNext = () => {
+        if (step===0) return true;
+        if (step===1) return f.why.length>0 || f.whyFree.trim().length>0;
+        if (step===2) return f.level!==""; // minimi
+        if (step===3) return f.mobility!=="" && f.screen!=="";
+        if (step===4) return f.budget!=="";
+        if (step===5) return true;
+        return true;
+      };
 
       const copySummary = () => {
         const txt = [
@@ -292,7 +347,7 @@ Lopuksi saat yhteenvedon ja henkilökohtaisen suosituksen sekä linkkejä oman p
           `Digituki: ${f.support || '-'}`,
           "",
           `Suositeltu tyyppi: ${scoring.best}${scoring.alt ? ` (vaihtoehto: ${scoring.alt})` : ""}`
-        ].join('\n');
+        ].join("\n");
         navigator.clipboard.writeText(txt).then(()=> alert('Yhteenveto kopioitu.'));
       };
 
@@ -318,167 +373,230 @@ Lopuksi saat yhteenvedon ja henkilökohtaisen suosituksen sekä linkkejä oman p
         const a = document.createElement('a'); a.href=url; a.download='seniorisurf_kysely.csv'; a.click();
       };
 
+      // ——— UI rungot
+      const Stepper = () => (
+        <div className="flex flex-wrap gap-2 text-sm mb-3">
+          {t.steps.map((s,i)=>(
+            <span key={s} className={`px-2 py-1 rounded-full border ${i===step? 'bg-emerald-100 border-emerald-300 dark:bg-emerald-900/30 dark:border-emerald-700':'bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-600'}`}>{i}. {s}</span>
+          ))}
+        </div>
+      );
+
+      const Nav = ({showSummaryNext=false}) => (
+        <div className="flex justify-between items-center mt-4">
+          <button className="btn" onClick={()=> setStep(s=> Math.max(0,s-1))} disabled={step===0}>{t.ui.back}</button>
+          <div className="flex gap-2">
+            {step<5 && <button className="btn" onClick={()=> setStep(s=> s+1)} disabled={!canNext()}>{t.ui.next}</button>}
+            {step===5 && <button className="btn" onClick={()=> setStep(6)} disabled={!canNext()}>{t.ui.toSummary}</button>}
+            {step===0 && <button className="btn" onClick={()=> setStep(1)}>{t.ui.start}</button>}
+          </div>
+        </div>
+      );
+
+      // ——— sivun yläpalkki
+      const Header = () => (
+        <header className="mb-6">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-3">
+            <div>
+              <h1 className="text-2xl font-bold">{t.title}</h1>
+              <p>{t.subtitle}</p>
+            </div>
+            <div className="flex gap-2 items-center flex-wrap">
+              <button onClick={()=>setDark(v=>!v)} className="btn">{t.ui.theme}</button>
+              <button onClick={()=>setLarge(v=>!v)} className="btn">{t.ui.big}</button>
+              <button onClick={()=>window.print()} className="btn">{t.ui.print}</button>
+              <label>{t.ui.lang}:</label>
+              <select value={lang} onChange={e=>setLang(e.target.value)} className="border rounded px-2 py-1">
+                <option value="fi">FI</option><option value="sv">SV</option><option value="en">EN</option>
+              </select>
+              <button onClick={resetAll} className="btn">{t.ui.clear}</button>
+            </div>
+          </div>
+        </header>
+      );
+
+      // ——— STEPPISIVUT
+      const Intro = () => (
+        <section className="p-4 rounded-2xl border bg-white dark:bg-slate-800">
+          <h2 className="font-semibold text-lg">{t.introTitle}</h2>
+          <p className="mt-2 text-slate-700 dark:text-slate-300 whitespace-pre-line">{t.introBody}</p>
+          <Nav/>
+        </section>
+      );
+
+      const Step1 = () => (
+        <section className="p-4 rounded-2xl border bg-white dark:bg-slate-800">
+          <Stepper/>
+          <h2 className="font-semibold text-lg mb-2">{t.whyTitle}</h2>
+          <div className="flex flex-wrap gap-2">
+            {t.whyOpts.map(opt=>(
+              <Chip key={opt} label={opt} active={f.why.includes(opt)} onClick={()=>toggle('why', opt)} />
+            ))}
+          </div>
+          <label className="block text-sm mt-3">{t.whyFree}</label>
+          <textarea rows="3" value={f.whyFree} onChange={e=>setF({...f, whyFree:e.target.value})}
+            className="w-full p-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800" />
+          <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">💡 {t.whyTip}</p>
+          <Nav/>
+        </section>
+      );
+
+      const Step2 = () => (
+        <section className="p-4 rounded-2xl border bg-white dark:bg-slate-800">
+          <Stepper/>
+          <h2 className="font-semibold text-lg mb-2">{t.haveTitle}</h2>
+          <p className="font-medium">Laitteet</p>
+          <div className="flex flex-wrap gap-2 mb-3">
+            {t.haveOpts.map(opt=>(
+              <Chip key={opt} label={opt} active={f.have.includes(opt)} onClick={()=>toggle('have', opt)} />
+            ))}
+          </div>
+          <p className="font-medium">{t.levelTitle}</p>
+          <div className="flex flex-wrap gap-2 mb-3">
+            {t.levelOpts.map(opt=>(
+              <Chip key={opt} label={opt} active={f.level===opt} onClick={()=>setF({...f, level: f.level===opt ? "" : opt})} />
+            ))}
+          </div>
+          <p className="font-medium">{t.useTitle}</p>
+          <div className="flex flex-wrap gap-2">
+            {t.useOpts.map(opt=>(
+              <Chip key={opt} label={opt} active={f.use.includes(opt)} onClick={()=>toggle('use', opt)} />
+            ))}
+          </div>
+          <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">💡 {t.haveTip}</p>
+          <Nav/>
+        </section>
+      );
+
+      const Step3 = () => (
+        <section className="p-4 rounded-2xl border bg-white dark:bg-slate-800">
+          <Stepper/>
+          <h2 className="font-semibold text-lg mb-2">{t.prefTitle}</h2>
+          <p className="font-medium">{t.mobilityTitle}</p>
+          <div className="flex flex-wrap gap-2 mb-3">
+            {t.mobilityOpts.map(opt=>(
+              <Chip key={opt} label={opt} active={f.mobility===opt} onClick={()=>setF({...f, mobility: f.mobility===opt ? "" : opt})} />
+            ))}
+          </div>
+          <p className="font-medium">{t.screenTitle}</p>
+          <div className="flex flex-wrap gap-2">
+            {t.screenOpts.map(opt=>(
+              <Chip key={opt} label={opt} active={f.screen===opt} onClick={()=>setF({...f, screen: f.screen===opt ? "" : opt})} />
+            ))}
+          </div>
+          <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">💡 {t.prefTip}</p>
+          <Nav/>
+        </section>
+      );
+
+      const Step4 = () => (
+        <section className="p-4 rounded-2xl border bg-white dark:bg-slate-800">
+          <Stepper/>
+          <h2 className="font-semibold text-lg mb-2">{t.budTitle}</h2>
+          <p className="font-medium">{t.budgetTitle}</p>
+          <div className="flex flex-wrap gap-2 mb-3">
+            {t.budgetOpts.map(opt=>(
+              <Chip key={opt} label={opt} active={f.budget===opt} onClick={()=>setF({...f, budget: f.budget===opt ? "" : opt})} />
+            ))}
+          </div>
+          <p className="font-medium">{t.needTitle}</p>
+          <div className="flex flex-wrap gap-2">
+            {t.needOpts.map(opt=>(
+              <Chip key={opt} label={opt} active={f.needs.includes(opt)} onClick={()=>toggle('needs', opt)} />
+            ))}
+          </div>
+          <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">💡 {t.budTip}</p>
+          <Nav/>
+        </section>
+      );
+
+      const Step5 = () => (
+        <section className="p-4 rounded-2xl border bg-white dark:bg-slate-800">
+          <Stepper/>
+          <h2 className="font-semibold text-lg mb-2">{t.locTitle}</h2>
+          <label className="block text-sm">{t.placeLabel}</label>
+          <input value={f.place} onChange={e=>setF({...f, place:e.target.value})}
+            className="w-full p-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800" />
+          <p className="font-medium mt-3">{t.supportQ}</p>
+          <div className="flex flex-wrap gap-2">
+            {[t.yes, t.maybe, t.no].map(opt=>(
+              <Chip key={opt} label={opt} active={f.support===opt} onClick={()=>setF({...f, support: f.support===opt ? "" : opt})} />
+            ))}
+          </div>
+          <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">💡 {t.locTip}</p>
+          <Nav showSummaryNext/>
+        </section>
+      );
+
+      const Summary = () => (
+        <section className="p-4 rounded-2xl border bg-white dark:bg-slate-800">
+          <Stepper/>
+          <h2 className="font-semibold text-xl mb-2">{t.summaryTitle}</h2>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-3">
+              <h3 className="font-semibold mb-2">{t.yourAnswers}</h3>
+              <ul className="text-sm space-y-1">
+                <li><b>Hankintasyyt:</b> {f.why.join(', ') || '–'}</li>
+                <li><b>Vapaa kuvaus:</b> {f.whyFree || '–'}</li>
+                <li><b>Nykyiset laitteet:</b> {f.have.join(', ') || '–'}</li>
+                <li><b>Käyttötarkoitus:</b> {f.use.join(', ') || '–'}</li>
+                <li><b>Liikkuvuus:</b> {f.mobility || '–'}</li>
+                <li><b>Näyttö:</b> {f.screen || '–'}</li>
+                <li><b>Käyttäjäkokemus:</b> {f.level || '–'}</li>
+                <li><b>Budjetti:</b> {f.budget || '–'}</li>
+                <li><b>Erityistarpeet:</b> {f.needs.join(', ') || '–'}</li>
+                <li><b>Asuinpaikka:</b> {f.place || '–'}</li>
+                <li><b>Digituki:</b> {f.support || '–'}</li>
+              </ul>
+              <div className="flex flex-wrap gap-2 mt-3">
+                <button className="btn" onClick={copySummary}>{t.ui.copy}</button>
+                <button className="btn" onClick={exportCSV}>{t.ui.csv}</button>
+                <button className="btn" onClick={()=>window.print()}>{t.ui.print}</button>
+              </div>
+            </div>
+
+            <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-3">
+              <h3 className="font-semibold mb-1">{t.adviceTitle}</h3>
+              <p>
+                <b>{scoring.best}</b>
+                {scoring.alt ? <span> · {t.altAdvice}: <b>{scoring.alt}</b></span> : null}
+              </p>
+
+              <h4 className="font-semibold mt-3">{t.searchTitle}</h4>
+              <div className="grid sm:grid-cols-2 gap-2 mt-2">
+                {Object.entries(urlsBest).map(([k,u])=>(
+                  <a key={'best-'+k} href={u} target="_blank" rel="noreferrer"
+                     className="text-center border rounded-lg px-3 py-2 bg-slate-50 dark:bg-slate-700 hover:bg-slate-100">
+                    {t.shops[k]} ({scoring.best})
+                  </a>
+                ))}
+                {urlsAlt && Object.entries(urlsAlt).map(([k,u])=>(
+                  <a key={'alt-'+k} href={u} target="_blank" rel="noreferrer"
+                     className="text-center border rounded-lg px-3 py-2 bg-slate-50 dark:bg-slate-700 hover:bg-slate-100">
+                    {t.shops[k]} ({scoring.alt})
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="flex justify-between items-center mt-4">
+            <button className="btn" onClick={()=> setStep(5)}>{t.ui.back}</button>
+            <button className="btn" onClick={resetAll}>{t.ui.clear}</button>
+          </div>
+        </section>
+      );
+
       return (
         <div>
-          {/* Header */}
-          <header className="mb-6">
-            <div className="flex flex-col sm:flex-row justify-between items-center gap-3">
-              <div>
-                <h1 className="text-2xl font-bold">{t.title}</h1>
-                <p>{t.subtitle}</p>
-              </div>
-              <div className="flex gap-2 items-center flex-wrap">
-                <button onClick={()=>setDark(v=>!v)} className="border px-3 py-1 rounded">{t.theme}</button>
-                <button onClick={()=>setLarge(v=>!v)} className="border px-3 py-1 rounded">{t.bigText}</button>
-                <button onClick={()=>window.print()} className="border px-3 py-1 rounded">{t.print}</button>
-                <label>{t.lang}:</label>
-                <select value={lang} onChange={e=>setLang(e.target.value)} className="border rounded px-2 py-1">
-                  <option value="fi">FI</option><option value="sv">SV</option><option value="en">EN</option>
-                </select>
-                <button onClick={resetAll} className="border px-3 py-1 rounded">{t.clear}</button>
-              </div>
-            </div>
-
-            <div className="mt-4 p-4 rounded-2xl border bg-white dark:bg-slate-800">
-              <h2 className="font-semibold text-lg">{t.introTitle}</h2>
-              <p className="mt-2 text-slate-700 dark:text-slate-300 whitespace-pre-line">{t.introBody}</p>
-            </div>
-          </header>
-
-          {/* 1 – Miksi */}
-          <Section title={t.boxes[0]} tip={t.tips.why}>
-            <p>Valitse kaikki sopivat syyt.</p>
-            <div className="flex flex-wrap gap-2">
-              {t.whyOpts.map(opt=>(
-                <Chip key={opt} label={opt} active={f.why.includes(opt)} onClick={()=>toggle('why', opt)} />
-              ))}
-            </div>
-            <label className="block text-sm mt-2">{t.labels.freeText}</label>
-            <textarea rows="3" value={f.whyFree} onChange={e=>setF({...f, whyFree:e.target.value})}
-              className="w-full p-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800" />
-          </Section>
-
-          {/* 2 – Nykyiset & osaaminen & käyttötarkoitus */}
-          <Section title={t.boxes[1]} tip={t.tips.level}>
-            <p className="font-medium">Mitä laitteita sinulla on käytössä? (voit valita useita)</p>
-            <div className="flex flex-wrap gap-2">
-              {t.haveOpts.map(opt=>(
-                <Chip key={opt} label={opt} active={f.have.includes(opt)} onClick={()=>toggle('have', opt)} />
-              ))}
-            </div>
-
-            <p className="font-medium mt-3">Miten arvioit omaa osaamistasi?</p>
-            <div className="flex flex-wrap gap-2">
-              {t.levelOpts.map(opt=>(
-                <Chip key={opt} label={opt} active={f.level===opt} onClick={()=>setF({...f, level: f.level===opt ? "" : opt})} />
-              ))}
-            </div>
-
-            <p className="font-medium mt-3">{t.useTitle}</p>
-            <div className="flex flex-wrap gap-2">
-              {t.useOpts.map(opt=>(
-                <Chip key={opt} label={opt} active={f.use.includes(opt)} onClick={()=>toggle('use', opt)} />
-              ))}
-            </div>
-          </Section>
-
-          {/* 3 – Mieltymykset */}
-          <Section title={t.boxes[2]} tip={t.tips.prefs}>
-            <p className="font-medium">Liikkuvuus</p>
-            <div className="flex flex-wrap gap-2">
-              {t.mobilityOpts.map(opt=>(
-                <Chip key={opt} label={opt} active={f.mobility===opt} onClick={()=>setF({...f, mobility: f.mobility===opt ? "" : opt})} />
-              ))}
-            </div>
-
-            <p className="font-medium mt-3">Näyttö / koko</p>
-            <div className="flex flex-wrap gap-2">
-              {t.screenOpts.map(opt=>(
-                <Chip key={opt} label={opt} active={f.screen===opt} onClick={()=>setF({...f, screen: f.screen===opt ? "" : opt})} />
-              ))}
-            </div>
-          </Section>
-
-          {/* 4 – Budjetti & tarpeet */}
-          <Section title={t.boxes[3]} tip={t.tips.budget}>
-            <p className="font-medium">Budjetti</p>
-            <div className="flex flex-wrap gap-2">
-              {t.budgetOpts.map(opt=>(
-                <Chip key={opt} label={opt} active={f.budget===opt} onClick={()=>setF({...f, budget: f.budget===opt ? "" : opt})} />
-              ))}
-            </div>
-
-            <p className="font-medium mt-3">Erityistarpeet (voit valita useita)</p>
-            <div className="flex flex-wrap gap-2">
-              {t.needOpts.map(opt=>(
-                <Chip key={opt} label={opt} active={f.needs.includes(opt)} onClick={()=>toggle('needs', opt)} />
-              ))}
-            </div>
-          </Section>
-
-          {/* 5 – Asuinpaikka & digituki */}
-          <Section title={t.boxes[4]} tip={t.tips.support}>
-            <label className="block text-sm">{t.labels.place}</label>
-            <input value={f.place} onChange={e=>setF({...f, place:e.target.value})}
-              className="w-full p-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800" />
-            <p className="font-medium mt-3">{t.labels.supportQ}</p>
-            <div className="flex flex-wrap gap-2">
-              {[t.labels.yes, t.labels.maybe, t.labels.no].map(opt=>(
-                <Chip key={opt} label={opt} active={f.support===opt} onClick={()=>setF({...f, support: f.support===opt ? "" : opt})} />
-              ))}
-            </div>
-          </Section>
-
-          {/* 6 – Yhteenveto & hakulinkit */}
-          <Section title={t.boxes[5]} tip={t.tips.summary}>
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-3">
-                <h3 className="font-semibold mb-2">{t.labels.yourAnswers}</h3>
-                <ul className="text-sm space-y-1">
-                  <li><b>Hankintasyyt:</b> {f.why.join(', ') || '–'}</li>
-                  <li><b>Vapaa kuvaus:</b> {f.whyFree || '–'}</li>
-                  <li><b>Nykyiset laitteet:</b> {f.have.join(', ') || '–'}</li>
-                  <li><b>Käyttötarkoitus:</b> {f.use.join(', ') || '–'}</li>
-                  <li><b>Liikkuvuus:</b> {f.mobility || '–'}</li>
-                  <li><b>Näyttö:</b> {f.screen || '–'}</li>
-                  <li><b>Käyttäjäkokemus:</b> {f.level || '–'}</li>
-                  <li><b>Budjetti:</b> {f.budget || '–'}</li>
-                  <li><b>Erityistarpeet:</b> {f.needs.join(', ') || '–'}</li>
-                  <li><b>Asuinpaikka:</b> {f.place || '–'}</li>
-                  <li><b>Digituki:</b> {f.support || '–'}</li>
-                </ul>
-                <div className="flex flex-wrap gap-2 mt-3">
-                  <button className="border px-3 py-1.5 rounded" onClick={copySummary}>{t.copy}</button>
-                  <button className="border px-3 py-1.5 rounded" onClick={exportCSV}>{t.export}</button>
-                </div>
-              </div>
-
-              <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-3">
-                <h3 className="font-semibold mb-1">{t.labels.adviceTitle}</h3>
-                <p>
-                  <b>{scoring.best}</b>
-                  {scoring.alt ? <span> · {t.labels.altAdvice}: <b>{scoring.alt}</b></span> : null}
-                </p>
-
-                <h4 className="font-semibold mt-3">{t.labels.searchTitle}</h4>
-                <div className="grid sm:grid-cols-2 gap-2 mt-2">
-                  {Object.entries(urlsBest).map(([k,u])=>(
-                    <a key={'best-'+k} href={u} target="_blank" rel="noreferrer"
-                       className="text-center border rounded-lg px-3 py-2 bg-slate-50 dark:bg-slate-700 hover:bg-slate-100">
-                      {t.shops[k]} ({scoring.best})
-                    </a>
-                  ))}
-                  {urlsAlt && Object.entries(urlsAlt).map(([k,u])=>(
-                    <a key={'alt-'+k} href={u} target="_blank" rel="noreferrer"
-                       className="text-center border rounded-lg px-3 py-2 bg-slate-50 dark:bg-slate-700 hover:bg-slate-100">
-                      {t.shops[k]} ({scoring.alt})
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </Section>
-
+          <Header/>
+          {step===0 && <Intro/>}
+          {step===1 && <Step1/>}
+          {step===2 && <Step2/>}
+          {step===3 && <Step3/>}
+          {step===4 && <Step4/>}
+          {step===5 && <Step5/>}
+          {step===6 && <Summary/>}
           <footer className="text-xs text-slate-500 mt-6">{t.footer}</footer>
         </div>
       );
