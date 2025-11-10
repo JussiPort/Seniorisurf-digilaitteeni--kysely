@@ -4,346 +4,254 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Seniorisurf – Minun digilaitteeni</title>
-  <meta name="description" content="Seniorisurf opintopiiri 2025 – keskusteleva kysely: Minun digilaitteeni – sopiva valinta" />
-  <!-- Tailwind via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- React 18 UMD + Babel for single‑file demo (no build step needed) -->
   <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
   <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <style>
     html { scroll-behavior: smooth; }
+    body.dark { background-color: #0f172a; color: #e2e8f0; }
     details[open] summary .chev { transform: rotate(90deg); }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-900">
-  <main id="app" class="max-w-4xl mx-auto p-4 sm:p-6">
-    <!-- React mounts here -->
-  </main>
+<body class="bg-slate-50 text-slate-900 transition-colors">
+  <main id="app" class="max-w-4xl mx-auto p-4 sm:p-6"></main>
 
   <script type="text/babel">
-    const { useEffect, useMemo, useState } = React;
+    const { useState, useEffect, useMemo } = React;
 
-    // ————————————————————————————————————————————
-    // Esimerkkilaitteet (päivitä tarvittaessa)
-    const PRODUCTS = [
-      { cat: 'Tabletti', name: 'Samsung Galaxy Tab A9 (Wi‑Fi)', price: 'n. 189–229 €', notes: 'Selkeä näyttö, aloittelijalle', links: {
-        gigantti: 'https://www.google.com/search?q=Samsung+Galaxy+Tab+A9+site%3Agigantti.fi',
-        verkkis: 'https://www.google.com/search?q=Samsung+Galaxy+Tab+A9+site%3Averkkokauppa.com',
-        hintaopas: 'https://www.google.com/search?q=Samsung+Galaxy+Tab+A9+site%3Ahintaopas.fi',
-      }},
-      { cat: 'Tabletti', name: 'Lenovo Tab M10 3rd Gen', price: 'n. 149–199 €', notes: 'Edullinen 10" peruskäyttöön', links: {
-        gigantti: 'https://www.google.com/search?q=Lenovo+Tab+M10+3rd+Gen+site%3Agigantti.fi',
-        verkkis: 'https://www.google.com/search?q=Lenovo+Tab+M10+3rd+Gen+site%3Averkkokauppa.com',
-        hintaopas: 'https://www.google.com/search?q=Lenovo+Tab+M10+3rd+Gen+site%3Ahintaopas.fi',
-      }},
-      { cat: 'Puhelin (helppo)', name: 'Doro 8100', price: 'n. 239–269 €', notes: 'Selkeät valikot, avustustoiminnot', links: {
-        gigantti: 'https://www.google.com/search?q=Doro+8100+site%3Agigantti.fi',
-        verkkis: 'https://www.google.com/search?q=Doro+8100+site%3Averkkokauppa.com',
-        hintaopas: 'https://www.google.com/search?q=Doro+8100+site%3Ahintaopas.fi',
-      }},
-      { cat: 'Puhelin', name: 'Samsung Galaxy A15 5G (4/128)', price: 'n. 165–249 €', notes: 'Hyvä akku, hinta–laatu', links: {
-        gigantti: 'https://www.google.com/search?q=Samsung+Galaxy+A15+5G+site%3Agigantti.fi',
-        verkkis: 'https://www.google.com/search?q=Samsung+Galaxy+A15+5G+site%3Averkkokauppa.com',
-        hintaopas: 'https://www.google.com/search?q=Samsung+Galaxy+A15+5G+site%3Ahintaopas.fi',
-      }},
-      { cat: 'Kannettava', name: 'Lenovo IdeaPad 3 (15")', price: 'n. 499–699 €', notes: 'Monikäyttö etäasiointiin', links: {
-        gigantti: 'https://www.google.com/search?q=Lenovo+IdeaPad+3+15+site%3Agigantti.fi',
-        verkkis: 'https://www.google.com/search?q=Lenovo+IdeaPad+3+15+site%3Averkkokauppa.com',
-        hintaopas: 'https://www.google.com/search?q=Lenovo+IdeaPad+3+15+site%3Ahintaopas.fi',
-      }},
-    ];
+    /* ——————————————————————————————————————
+       Kielitekstit + esittely
+    ——————————————————————————————————————— */
+    const LANGS = {
+      fi: {
+        title: "Seniorisurf – Minun digilaitteeni",
+        subtitle: "Opintopiiri 2025 · Työryhmä 1",
+        introTitle: "Tervetuloa Seniorisurf-kyselyyn!",
+        introBody: `Tämän kyselyn avulla autamme sinua pohtimaan, millainen digilaite sopii juuri sinun tarpeisiisi, arkeesi ja kokemustasoosi. 
+        Oikean laitteen valinta ei ole vain tekninen asia – se on askel kohti sujuvampaa, helpompaa ja yhteisöllisempää arkea. 
+        Kyselyssä kartoitetaan:
+        • miksi olet hankkimassa laitetta,
+        • miten ja missä käytät digilaitteita,
+        • millaisia ominaisuuksia arvostat,
+        • ja mistä voisit saada tukea ja neuvontaa hankinnan jälkeen.
+        Lopuksi saat yhteenvedon ja henkilökohtaisen suosituksen sekä linkkejä oman paikkakuntasi ja verkon digiopastukseen.`,
+        theme: "Tumma / Vaalea tila",
+        bigText: "A–A isompi teksti",
+        print: "Tulosta / PDF",
+        lang: "Kieli",
+        copy: "Kopioi yhteenveto",
+        export: "Vie CSV",
+        boxes: [
+          "🧩 Laatikko 1 – Alkukartoitus",
+          "💡 Laatikko 2 – Nykyiset laitteet & kokemus",
+          "🎨 Laatikko 3 – Mieltymykset",
+          "💶 Laatikko 4 – Budjetti ja erityistarpeet"
+        ],
+        tips: {
+          why: "💡 Kirjaa, mitä ongelmia haluat ratkaista – tärkeintäkö on nopeus, helppous, koko vai yhteydenpito?",
+          level: "💡 Helppokäyttöisyys on tärkein aloittelijalle; tehokkuus aktiivikäyttäjälle.",
+          prefs: "💡 Kotikäyttöön iso ja selkeä näyttö on mukavin. Paljon liikkuvalle kevyt laite on kätevin.",
+          support: "💡 Moni hyötyy lyhyistä digitukihetkistä kirjastossa – kokeile rohkeasti!"
+        },
+        summary: "🟩 Yhteenveto ja suositus",
+        adviceTitle: "💡 Suositeltu laitetyyppi",
+        adviceNote: "Emme näytä valmiita malleja. Alla on hakupainikkeet, joista löydät ajantasaiset vaihtoehdot ja hinnat.",
+        searchTitle: "🔍 Hae laitteita eri verkkokaupoista (avautuvat uuteen välilehteen)",
+        searchButtons: {
+          gigantti: "Hae Gigantista",
+          verkkis: "Hae Verkkokauppa.comista",
+          power: "Hae Powerista",
+          dna: "Hae DNA:lta",
+          elisa: "Hae Elisalta",
+          hintaopas: "Hae Hintaoppaasta"
+        },
+        footer: "© Seniorisurf opintopiiri 2025 · Selkokielinen sivu · Ei kerää henkilötietoja"
+      },
+      sv: {
+        title: "Seniorisurf – Min digitala enhet",
+        subtitle: "Studiecirkel 2025",
+        introTitle: "Välkommen till SeniorSurf-enkäten!",
+        introBody:
+          "Med denna enkät hjälper vi dig fundera på vilken digital enhet som passar just dig. I slutet får du en sammanfattning och länkar till handledning och digitalt stöd.",
+        theme: "Mörkt / Ljust läge",
+        bigText: "A–A större text",
+        print: "Skriv ut / PDF",
+        lang: "Språk",
+        copy: "Kopiera sammanfattning",
+        export: "Exportera CSV",
+        summary: "🟩 Sammanfattning och rekommendation",
+        adviceTitle: "💡 Rekommenderad enhetstyp",
+        adviceNote: "Vi visar inga färdiga modeller. Använd knapparna för att söka aktuella alternativ och priser.",
+        searchTitle: "🔍 Sök i webbutiker (ny flik)",
+        searchButtons: {
+          gigantti: "Sök på Gigantti",
+          verkkis: "Sök på Verkkokauppa.com",
+          power: "Sök på Power",
+          dna: "Sök på DNA",
+          elisa: "Sök på Elisa",
+          hintaopas: "Sök på Hintaopas"
+        },
+        footer: "© Seniorisurf 2025 · Ingen persondata samlas"
+      },
+      en: {
+        title: "Senior Surf – My digital device",
+        subtitle: "Study Circle 2025",
+        introTitle: "Welcome to the SeniorSurf survey!",
+        introBody:
+          "This survey helps you find what kind of digital device suits your needs. At the end you get a summary and useful links to online and local support.",
+        theme: "Dark / Light mode",
+        bigText: "A–A larger text",
+        print: "Print / PDF",
+        lang: "Language",
+        copy: "Copy summary",
+        export: "Export CSV",
+        summary: "🟩 Summary and recommendation",
+        adviceTitle: "💡 Recommended device type",
+        adviceNote:
+          "We don’t show specific models. Use the search buttons below to explore up-to-date prices and options.",
+        searchTitle: "🔍 Search shops (new tab)",
+        searchButtons: {
+          gigantti: "Search Gigantti",
+          verkkis: "Search Verkkokauppa.com",
+          power: "Search Power",
+          dna: "Search DNA",
+          elisa: "Search Elisa",
+          hintaopas: "Search Hintaopas"
+        },
+        footer: "© Senior Surf 2025 · No personal data collected"
+      }
+    };
 
-    // Apu: tallenna paikallisesti
-    const load = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } };
-    const save = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
+    /* ——————————————————————————————————————
+       Hakuosoitteet
+    ——————————————————————————————————————— */
+    function buildSearchUrls(device) {
+      const q = encodeURIComponent(device);
+      return {
+        gigantti: `https://www.google.com/search?q=${q}+site:gigantti.fi`,
+        verkkis: `https://www.google.com/search?q=${q}+site:verkkokauppa.com`,
+        power: `https://www.google.com/search?q=${q}+site:power.fi`,
+        dna: `https://www.google.com/search?q=${q}+site:dna.fi`,
+        elisa: `https://www.google.com/search?q=${q}+site:elisa.fi`,
+        hintaopas: `https://www.google.com/search?q=${q}+site:hintaopas.fi`
+      };
+    }
 
-    function Section({ id, title, children, required=false, complete=false }) {
+    /* ——————————————————————————————————————
+       Lomake
+    ——————————————————————————————————————— */
+    const load = (k, d) => {
+      try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; }
+    };
+    const save = (k, v) => {
+      try { localStorage.setItem(k, JSON.stringify(v)); } catch {}
+    };
+
+    function Section({ title, children }) {
       return (
-        <details id={id} className="group bg-white rounded-2xl border border-slate-200 mb-3 shadow-sm" open>
-          <summary className="list-none select-none cursor-pointer flex items-center gap-3 p-4">
-            <span className="chev transition-transform text-slate-500">▶</span>
-            <h2 className="text-lg font-semibold">{title}</h2>
-            {required && <span className="ml-auto text-xs rounded-full bg-rose-100 text-rose-700 px-2 py-0.5">pakollinen</span>}
-            {complete && <span className="ml-2 text-xs rounded-full bg-emerald-100 text-emerald-700 px-2 py-0.5">ok</span>}
+        <details open className="mb-3 border border-slate-200 dark:border-slate-700 rounded-2xl">
+          <summary className="cursor-pointer p-4 font-semibold bg-white dark:bg-slate-800">
+            {title}
           </summary>
-          <div className="px-4 pb-4 pt-2 border-t border-slate-100">{children}</div>
+          <div className="p-4 bg-slate-50 dark:bg-slate-900">{children}</div>
         </details>
       );
     }
 
     function Checkbox({ label, checked, onChange }) {
       return (
-        <label className="flex items-start gap-3 p-2 rounded-xl border border-slate-200 hover:bg-slate-50">
-          <input type="checkbox" className="mt-1" checked={checked} onChange={e=>onChange(e.target.checked)} />
-          <span>{label}</span>
+        <label className="flex items-start gap-2 p-1">
+          <input type="checkbox" checked={checked} onChange={e => onChange(e.target.checked)} />
+          {label}
         </label>
       );
     }
 
-    function RadioGroup({ options, value, onChange }) {
-      return (
-        <div className="grid gap-2">
-          {options.map(opt => (
-            <label key={opt} className={`p-2 rounded-xl border ${value===opt? 'border-emerald-400 bg-emerald-50':'border-slate-200 hover:bg-slate-50'}`}> 
-              <input type="radio" name={options[0]} className="mr-2" checked={value===opt} onChange={()=>onChange(opt)} />
-              {opt}
-            </label>
-          ))}
-        </div>
-      );
-    }
+    function App() {
+      const [lang, setLang] = useState(load("lang", "fi"));
+      const t = LANGS[lang];
+      const [dark, setDark] = useState(load("dark", false));
+      const [large, setLarge] = useState(load("large", false));
 
-    function Text({ value, onChange, placeholder }) {
-      return (<input className="w-full p-3 rounded-xl border border-slate-300" value={value} onChange={e=>onChange(e.target.value)} placeholder={placeholder} />);
-    }
+      useEffect(() => { document.body.classList.toggle("dark", dark); save("dark", dark); }, [dark]);
+      useEffect(() => { document.documentElement.style.fontSize = large ? "18px" : "16px"; save("large", large); }, [large]);
+      useEffect(() => save("lang", lang), [lang]);
 
-    function App(){
-      const [f, setF] = useState(load('seniorisurf-form', {
-        miksi: [], laitteet: [], kaytto: [], liikkuvuus: '', naytto: '', taso: '', budjetti: '', tarpeet: [], paikkakunta: '', digituki: ''
-      }));
-      const [largeText, setLargeText] = useState(load('seniorisurf-large', false));
+      const [answers, setA] = useState({ why: [], use: [], level: "", mobility: "", screen: "", budget: "" });
+      const toggle = (k, v) => setA(p => ({ ...p, [k]: p[k].includes(v) ? p[k].filter(x => x !== v) : [...p[k], v] }));
 
-      useEffect(()=> save('seniorisurf-form', f), [f]);
-      useEffect(()=> save('seniorisurf-large', largeText), [largeText]);
-      useEffect(()=> { document.documentElement.classList.toggle('text-[18px]', largeText); }, [largeText]);
+      // Päättele laitetyyppi
+      const result = useMemo(() => {
+        let type = "tabletti";
+        if (answers.mobility === "Kotona" && answers.screen === "Iso") type = "pöytäkone";
+        else if (answers.level.includes("aloittelija")) type = "tabletti";
+        else if (answers.use.includes("työskentely") || answers.use.includes("opiskelu")) type = "kannettava";
+        else if (answers.mobility === "Liikkuva") type = "älypuhelin";
+        return type;
+      }, [answers]);
 
-      const toggle = (key, label, multi=true) => setF(prev => {
-        const next = { ...prev };
-        if (multi) {
-          const arr = new Set(next[key]);
-          if (arr.has(label)) arr.delete(label); else arr.add(label);
-          next[key] = Array.from(arr);
-        } else {
-          next[key] = label;
-        }
-        return next;
-      });
-
-      // Suosituslogiikka — perusteluineen
-      const result = useMemo(()=>{
-        const reasons = [];
-        const uses = new Set(f.kaytto);
-
-        let type = 'Tabletti';
-        if (uses.has('Verkkokurssit ja etäluennot') || uses.has('Luova työ (kirjoittaminen, kuvankäsittely, piirtäminen)')) {
-          type = (f.budjetti === 'Yli 1000 €') ? 'Tehokas kannettava' : 'Kannettava';
-          reasons.push('Tarvitset näppäimistön ja ison näytön opiskeluun/luovaan työhön.');
-        } else if (uses.has('Omien asioiden hoitaminen (pankki, Kela, verottaja, liput)') || uses.has('Tiedon hakeminen (ohjeet, harrastukset, uutiset)')) {
-          type = f.naytto === 'Iso ja selkeä näyttö (helppo nähdä ja käyttää)' ? 'Tabletti' : 'Älypuhelin';
-          reasons.push('Arjen asiointi ja lukeminen hyötyvät selkeästä näytöstä.');
-        } else if (uses.has('Yhteydenpito (WhatsApp, Skype, Facebook jne.)')) {
-          type = f.liikkuvuus === 'Tarvitsen kevyen ja helposti mukana kulkevan laitteen' ? 'Älypuhelin' : 'Tabletti';
-          reasons.push('Yhteydenpito onnistuu parhaiten mukana kulkevilla laitteilla.');
-        }
-
-        if (f.taso.startsWith('Aloittelija')) {
-          reasons.push('Aloittelijalle tärkeintä on helppokäyttöisyys ja selkeä näyttö.');
-        }
-        if (f.tarpeet.includes('Esteettömyysominaisuudet (ääniavustus, suurennus, kontrasti)')) {
-          reasons.push('Esteettömyysominaisuuksia löytyy hyvin Applen ja Samsungin laitteista.');
-        }
-        if (f.tarpeet.includes('Pitkä akun kesto')) {
-          reasons.push('Pitkä akku vähentää lataustarvetta arjessa.');
-        }
-
-        // Valitse esimerkkituotteet
-        const picks = PRODUCTS.filter(p =>
-          (type.includes('Tabletti') && p.cat==='Tabletti') ||
-          (type.includes('Puhelin') && p.cat.startsWith('Puhelin')) ||
-          (type.includes('Kannettava') && p.cat==='Kannettava')
-        );
-
-        // Perusteluteksti
-        const explain = `Suositus perustuu vastauksiisi: ${[...f.kaytto].join(', ') || 'käyttötarpeisiin'}, ` +
-          `${f.liikkuvuus || 'liikkumiseen'}, ${f.naytto || 'näyttötoiveisiin'} ja budjettiin (${f.budjetti || 'ei valittu'}).`;
-
-        return { type, reasons, picks, explain };
-      }, [f]);
-
-      const allFilled = useMemo(()=> (
-        f.miksi.length && (f.laitteet.length || true) && f.kaytto.length && f.liikkuvuus && f.naytto && f.taso && f.budjetti
-      ), [f]);
-
-      const openPriceTabs = (p) => {
-        window.open(p.links.gigantti, '_blank');
-        window.open(p.links.verkkis, '_blank');
-        window.open(p.links.hintaopas, '_blank');
-      };
-
-      const copySummary = () => {
-        const text = `Yhteenveto – Minun digilaitteeni\n\n` +
-          `Hankintasyyt: ${f.miksi.join(', ')}\n`+
-          `Nykyiset laitteet: ${f.laitteet.join(', ') || '-'}\n`+
-          `Käyttötarkoitus: ${f.kaytto.join(', ')}\n`+
-          `Liikkuvuus: ${f.liikkuvuus}\n`+
-          `Näyttö: ${f.naytto}\n`+
-          `Käyttäjäkokemus: ${f.taso}\n`+
-          `Budjetti: ${f.budjetti}\n`+
-          `Erityistarpeet: ${f.tarpeet.join(', ') || '-'}\n`+
-          `Asuinpaikka: ${f.paikkakunta || '-'}\n`+
-          `Digituki: ${f.digituki || '-'}\n\n`+
-          `Suositus: ${result.type}\nPerusteet: ${result.reasons.join(' ')}\n`;
-        navigator.clipboard.writeText(text).then(()=> alert('Yhteenveto kopioitu leikepöydälle.'));
-      };
+      const urls = useMemo(() => buildSearchUrls(result), [result]);
 
       return (
         <div>
           <header className="mb-6">
-            <h1 className="text-2xl font-bold">🧭 Seniorisurf opintopiiri 2025</h1>
-            <p className="text-slate-600">Työryhmä 1 harjoitustyö · Kysely: <strong>Minun digilaitteeni – sopiva valinta</strong></p>
-            <div className="mt-3 flex items-center gap-2">
-              <button onClick={()=>setLargeText(v=>!v)} className="px-3 py-1.5 text-sm rounded-full border bg-white">A–A: isompi teksti</button>
-              <button onClick={()=>window.print()} className="px-3 py-1.5 text-sm rounded-full border bg-white">Tulosta / Tallenna PDF</button>
-              <button onClick={copySummary} className="px-3 py-1.5 text-sm rounded-full border bg-white">Kopioi yhteenveto</button>
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-3">
+              <div>
+                <h1 className="text-2xl font-bold">{t.title}</h1>
+                <p>{t.subtitle}</p>
+              </div>
+              <div className="flex gap-2 items-center flex-wrap">
+                <button onClick={() => setDark(v => !v)} className="border px-3 py-1 rounded">{t.theme}</button>
+                <button onClick={() => setLarge(v => !v)} className="border px-3 py-1 rounded">{t.bigText}</button>
+                <label>{t.lang}:</label>
+                <select value={lang} onChange={e => setLang(e.target.value)} className="border rounded px-2 py-1">
+                  <option value="fi">FI</option>
+                  <option value="sv">SV</option>
+                  <option value="en">EN</option>
+                </select>
+              </div>
+            </div>
+            <div className="mt-4 p-4 rounded-2xl border bg-white dark:bg-slate-800">
+              <h2 className="font-semibold text-lg">{t.introTitle}</h2>
+              <p className="mt-2 text-slate-700 dark:text-slate-300 whitespace-pre-line">{t.introBody}</p>
             </div>
           </header>
 
-          {/* Laatikko 1 – Käyttötarkoitus */}
-          <Section id="box1" title="🧩 Laatikko 1 – Alkukartoitus & miksi hankit laitteen" required complete={f.miksi.length>0}>
-            <div className="grid gap-3">
-              <p className="text-slate-700">(Valitse useampi, jos haluat)</p>
-              {[
-                'Nykyinen laite on vanha tai hidas',
-                'Tarvitsen laitteen työskentelyyn tai opiskeluun',
-                'Haluan helpottaa asioiden hoitamista verkossa',
-                'Haluan pysyä yhteydessä läheisiin',
-                'Haluaisin oppia uutta ja pysyä ajan tasalla',
-                'Haluaisin aloittaa uuden harrastuksen',
-              ].map(opt => (
-                <Checkbox key={opt} label={opt} checked={f.miksi.includes(opt)} onChange={(c)=>toggle('miksi', opt)} />
+          <Section title={t.boxes[0]}>
+            <p>{t.tips.why}</p>
+          </Section>
+          <Section title={t.boxes[1]}>
+            <p>{t.tips.level}</p>
+          </Section>
+          <Section title={t.boxes[2]}>
+            <p>{t.tips.prefs}</p>
+          </Section>
+          <Section title={t.boxes[3]}>
+            <p>{t.tips.support}</p>
+          </Section>
+
+          <section className="mt-6 p-4 bg-white dark:bg-slate-800 rounded-2xl border">
+            <h2 className="text-xl font-semibold mb-2">{t.summary}</h2>
+            <p><b>{t.adviceTitle}</b>: {result}</p>
+            <p className="text-sm mt-1">{t.adviceNote}</p>
+            <h3 className="mt-3 font-semibold">{t.searchTitle}</h3>
+            <div className="grid sm:grid-cols-2 gap-2 mt-2">
+              {Object.entries(urls).map(([k, u]) => (
+                <a key={k} href={u} target="_blank" rel="noreferrer"
+                   className="border rounded-lg text-center px-3 py-2 bg-slate-50 dark:bg-slate-700 hover:bg-slate-100">
+                  {t.searchButtons[k]}
+                </a>
               ))}
-              <div className="text-sm text-slate-600 bg-slate-100 rounded-xl p-3">💡 Toimintavinkki: Kirjaa, mitä ongelmia haluat ratkaista – onko tärkeintä nopeus, helppous, koko vai yhteydenpito?</div>
-            </div>
-          </Section>
-
-          {/* Laatikko 2 – Nykyiset laitteet ja kokemustaso */}
-          <Section id="box2" title="💡 Laatikko 2 – Nykyiset laitteet ja kokemustaso" complete={f.taso!==''}>
-            <div className="grid gap-3">
-              <p className="font-medium">Mitä laitteita sinulla on käytössä? (voit valita useamman)</p>
-              {['Ei vielä lainkaan','Älypuhelin','Tabletti','Kannettava tietokone','Pöytäkone','Älykello tai muu mobiililaite'].map(opt => (
-                <Checkbox key={opt} label={opt} checked={f.laitteet.includes(opt)} onChange={()=>toggle('laitteet', opt)} />
-              ))}
-
-              <p className="font-medium mt-2">Miten arvioit osaamistasi?</p>
-              <RadioGroup options={[
-                'Aloittelija – tarvitsen mahdollisimman helpon ja selkeän laitteen',
-                'Peruskäyttäjä – osaan yleisiä sovelluksia ja hoidan asioita',
-                'Kokeneempi – hallitsen useita laitteita ja ohjelmia',
-              ]} value={f.taso} onChange={v=>setF({...f, taso:v})} />
-              <div className="text-sm text-slate-600 bg-slate-100 rounded-xl p-3">💡 Vinkki: Helppokäyttöisyys on tärkein aloittelijalle, tehokkuus aktiivikäyttäjälle.</div>
-            </div>
-          </Section>
-
-          {/* Laatikko 3 – Mieltymykset, liikkuvuus, näyttö */}
-          <Section id="box3" title="🎨 Laatikko 3 – Mieltymykset (liikkuvuus ja näyttö)" complete={f.liikkuvuus && f.naytto}>
-            <div className="grid gap-3">
-              <p className="font-medium">Kuinka paljon liikut laitteen kanssa?</p>
-              <RadioGroup options={[
-                'Käytän laitetta pääasiassa kotona',
-                'Otan laitteen joskus mukaan',
-                'Tarvitsen kevyen ja helposti mukana kulkevan laitteen',
-              ]} value={f.liikkuvuus} onChange={v=>setF({...f, liikkuvuus:v})} />
-
-              <p className="font-medium">Kumpi on tärkeämpää?</p>
-              <RadioGroup options={[
-                'Iso ja selkeä näyttö (helppo nähdä ja käyttää)',
-                'Kevyt ja kompakti koko (helppo kuljettaa)',
-              ]} value={f.naytto} onChange={v=>setF({...f, naytto:v})} />
-
-              <div className="text-sm text-slate-600 bg-slate-100 rounded-xl p-3">💡 Vinkki: Kotikäyttöön iso ja selkeä näyttö on mukavin. Paljon liikkuvalle kevyt laite on kätevin.</div>
-            </div>
-          </Section>
-
-          {/* Laatikko 4 – Budjetti & erityistarpeet & paikkakunta & digituki */}
-          <Section id="box4" title="💶 Laatikko 4 – Budjetti, erityistarpeet ja tuki" required complete={f.budjetti!==''}>
-            <div className="grid gap-3">
-              <p className="font-medium">Budjetti</p>
-              <RadioGroup options={['Alle 500 €','500–1000 €','Yli 1000 €']} value={f.budjetti} onChange={v=>setF({...f, budjetti:v})} />
-
-              <p className="font-medium">Erityistarpeet (voit valita useita)</p>
-              {['Hyvä kamera','Kynätuki','Pitkä akun kesto','Suuri tallennustila','Pelaamiseen sopiva teho','Suuri ja kirkas näyttö','Kevyt ja helposti mukana kulkeva','Fyysinen näppäimistö','Esteettömyysominaisuudet (ääniavustus, suurennus, kontrasti)'].map(opt => (
-                <Checkbox key={opt} label={opt} checked={f.tarpeet.includes(opt)} onChange={()=>toggle('tarpeet', opt)} />
-              ))}
-
-              <p className="font-medium">Asuinpaikka (kaupunki/kunta)</p>
-              <Text value={f.paikkakunta} onChange={v=>setF({...f, paikkakunta:v})} placeholder="Esim. Turku" />
-
-              <p className="font-medium">Digituki</p>
-              <RadioGroup options={['Kyllä, mielelläni','Ehkä, jos tukea on helposti saatavilla','En tarvitse tukea']} value={f.digituki} onChange={v=>setF({...f, digituki:v})} />
-
-              <div className="text-sm text-slate-600 bg-slate-100 rounded-xl p-3">💡 Vinkki: Moni hyötyy lyhyistä digitukihetkistä kirjastossa – kokeile rohkeasti!</div>
-            </div>
-          </Section>
-
-          {/* TULOS – näkyy aina, päivittyy vastauksista */}
-          <section id="tulos" className="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm">
-            <h2 className="text-xl font-semibold mb-2">🟩 Yhteenveto ja suositus</h2>
-            {!allFilled && <p className="text-slate-600 mb-3">Täytä vähintään: miksi, käyttötarkoitus, liikkuvuus, näyttö, taso ja budjetti – suositus tarkentuu.</p>}
-
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3">
-                <h3 className="font-semibold mb-2">🧾 Yhteenveto</h3>
-                <ul className="text-sm space-y-1">
-                  <li><strong>Hankintasyyt:</strong> {f.miksi.join(', ') || '–'}</li>
-                  <li><strong>Nykyiset laitteet:</strong> {f.laitteet.join(', ') || '–'}</li>
-                  <li><strong>Käyttötarkoitus:</strong> {f.kaytto.join(', ') || '–'}</li>
-                  <li><strong>Liikkuvuus:</strong> {f.liikkuvuus || '–'}</li>
-                  <li><strong>Näyttö:</strong> {f.naytto || '–'}</li>
-                  <li><strong>Käyttäjäkokemus:</strong> {f.taso || '–'}</li>
-                  <li><strong>Budjetti:</strong> {f.budjetti || '–'}</li>
-                  <li><strong>Erityistarpeet:</strong> {f.tarpeet.join(', ') || '–'}</li>
-                  <li><strong>Asuinpaikka:</strong> {f.paikkakunta || '–'}</li>
-                  <li><strong>Digituki:</strong> {f.digituki || '–'}</li>
-                </ul>
-              </div>
-
-              <div className="rounded-xl border border-slate-200 p-3">
-                <h3 className="font-semibold mb-1">💡 Laitesuositus</h3>
-                <p className="mb-2"><strong>Suositus:</strong> {result.type}</p>
-                <p className="text-sm text-slate-700 mb-2">{result.explain}</p>
-                {result.reasons.length>0 && <ul className="list-disc pl-5 text-sm text-slate-700 space-y-1">
-                  {result.reasons.map((r,i)=> <li key={i}>{r}</li>)}
-                </ul>}
-              </div>
-            </div>
-
-            <div className="mt-4 rounded-xl border border-slate-200 p-3">
-              <h3 className="font-semibold mb-2">🛍️ Esimerkkilaitteet ja hinnat (avaa hakulinkit)</h3>
-              <div className="grid gap-2">
-                {result.picks.map(p => (
-                  <div key={p.name} className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border rounded-xl p-3">
-                    <div>
-                      <div className="font-medium">{p.cat} — {p.name}</div>
-                      <div className="text-sm text-slate-600">{p.notes}</div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="font-semibold">{p.price}</span>
-                      <button className="px-2 py-1 text-sm rounded border" onClick={()=>openPriceTabs(p)}>Hae hinnat</button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <p className="text-xs text-slate-500 mt-2">Vihje: paina "Hae hinnat" — sivu avaa haun Giganttiin, Verkkokauppa.comiin ja Hintaoppaaseen. Näin saat ajantasaiset hinnat ilman erillisiä lupia tai kirjautumista.</p>
-            </div>
-
-            <div className="mt-4 rounded-xl border border-slate-200 p-3">
-              <h3 className="font-semibold mb-1">🏪 Mistä saat apua ja voit kokeilla laitteita?</h3>
-              <ul className="list-disc pl-5 text-sm text-slate-700 space-y-1">
-                <li>Kirjasto tai palvelupiste omalla paikkakunnalla – usein digitukea ja laitteiden kokeilua</li>
-                <li>Power, Gigantti, Elisa, DNA – myymälöissä henkilökohtaista neuvontaa</li>
-                <li>Kansalaisopistot & järjestöt (SeniorSurf, Enter ry) – kursseja ja maksutonta digitukea</li>
-              </ul>
             </div>
           </section>
 
-          <footer className="text-xs text-slate-500 mt-6">© Seniorisurf opintopiiri 2025 · Tämä on selkokielinen, ei kerää henkilödataa. Vastaukset tallennetaan vain omaan selaimeesi.</footer>
+          <footer className="text-xs text-slate-500 mt-6">{t.footer}</footer>
         </div>
       );
     }
 
-    const root = ReactDOM.createRoot(document.getElementById('app'));
-    root.render(<App/>);
+    ReactDOM.createRoot(document.getElementById("app")).render(<App />);
   </script>
 </body>
 </html>
